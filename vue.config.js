@@ -1,4 +1,3 @@
-module.export = {
-  //关闭eslint错误提示
+module.exports = {
   lintOnSave: false,
 };
