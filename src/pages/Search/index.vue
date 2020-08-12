@@ -1,10 +1,11 @@
 <template>
   <div>
-    Search...
+    <!-- Search...
 
     <p>name {{ name }}</p>
     <p>age {{ age }}</p>
-    <p>keyword {{ keyword }}</p>
+    <p>keyword {{ keyword }}</p> -->
+    <TypeNav></TypeNav>
   </div>
 </template>
 
