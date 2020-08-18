@@ -1,37 +1,41 @@
 import Home from "@/pages/Home";
-import Search from "@/pages/Search";
-import Register from "@/pages/Register";
 import Login from "@/pages/Login";
-
-export default [
+import Register from "@/pages/Register";
+import Search from "@/pages/Search";
+const routes = [
   {
     path: "/home",
-    name: "Home",
     component: Home,
   },
   {
-    path: "/search:keyword?",
-    name: "Search",
-    component: Search,
-    props(route) {
-      return {
-        ...route.params,
-        ...route.query,
-      };
+    path: "/login",
+    component: Login,
+    meta: {
+      isHide: true,
     },
   },
   {
     path: "/register",
     name: "Register",
     component: Register,
+    meta: {
+      isHide: true,
+    },
   },
   {
-    path: "/login",
-    name: "Login",
-    component: Login,
+    path: "/search/:keyword?",
+    name: "Search",
+    component: Search,
+    props(route) {
+      return {
+        keyword: route.params.keyword,
+        keyword1: route.query.keyword,
+      };
+    },
   },
   {
     path: "/",
     redirect: "/home",
   },
 ];
+export default routes;

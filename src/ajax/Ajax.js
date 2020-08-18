@@ -1,22 +1,24 @@
 import axios from "axios";
-import NProgress from "nprogress";
+import Nprogress from "nprogress";
 import "nprogress/nprogress.css";
+
 const instance = axios.create({
   baseURL: "/api",
   timeout: 20000,
 });
 instance.interceptors.request.use((config) => {
-  NProgress.start();
+  Nprogress.start();
   return config;
 });
 instance.interceptors.response.use(
-  (response) => {
-    NProgress.done();
-    return response.data;
+  (result) => {
+    Nprogress.done();
+    //console.log("请求拦截了");
+    return result.data;
   },
   (error) => {
+    Nprogress.done();
     alert("请求失败" + error.message || "未知错误");
-    NProgress.done();
     return new Promise(() => {});
   }
 );

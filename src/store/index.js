@@ -2,19 +2,25 @@ import Vue from "vue";
 import Vuex from "vuex";
 import home from "./home";
 import user from "./user";
+import search from "./search";
+
 Vue.use(Vuex);
-const state = {};
-const actions = {};
+
+const state = {
+  categroyList: [],
+};
 const getters = {};
 const mutations = {};
-
-export default new Vuex.Store({
+const actions = {};
+const store = new Vuex.Store({
   state,
-  actions,
   getters,
   mutations,
+  actions,
   modules: {
     home,
     user,
+    search,
   },
 });
+export default store;

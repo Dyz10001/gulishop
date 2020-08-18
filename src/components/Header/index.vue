@@ -9,7 +9,7 @@
             <span>请</span>
             <router-link to="/login">登录</router-link>
             <!-- <a href="###">登录</a> -->
-            <router-link class="register" to="/register">免费注册</router-link>
+            <router-link class="register" to="register">免费注册</router-link>
             <!-- <a href="###" class="register">免费注册</a> -->
           </p>
         </div>
@@ -42,6 +42,7 @@
             id="autocomplete"
             class="input-error input-xxlarge"
             v-model="keyword"
+            @keyup.enter="toSearch"
           />
           <button
             class="sui-btn btn-xlarge btn-danger"
@@ -66,18 +67,22 @@ export default {
   },
   methods: {
     toSearch() {
-      const loaction = {
-        //path: "/search",
+      const location = {
         name: "Search",
         params: {
-          keyword: this.keyword,
-        },
-        query: {
-          name: "rese",
-          age: 18,
+          keyword: this.keyword || undefined,
         },
       };
-      this.$router.push(loaction);
+      console.log(this.$route.query);
+      if (this.$route.query) {
+        location.query = this.$route.query;
+      }
+      if (this.$route.path !== "home") {
+        this.$router.replace(location);
+      } else {
+        this.$router.push(location);
+      }
+      //this.$router.push(location);
     },
   },
 };
