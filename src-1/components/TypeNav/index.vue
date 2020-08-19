@@ -12,7 +12,7 @@
         <a href="###">有趣</a>
         <a href="###">秒杀</a>
       </nav>
-      <div class="sort">
+      <div class="sort" v-show="$">
         <div class="all-sort-list2">
           <div class="item" v-for="c1 in categoryList" :key="c1.categoryId">
             <h3>

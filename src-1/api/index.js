@@ -1,4 +1,4 @@
-import Ajax from "src-1/ajax/Ajax";
+import Ajax from "@/ajax/Ajax";
 export const reqCategoryList = () => {
   return Ajax({
     method: "GET",

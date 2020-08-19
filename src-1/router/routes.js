@@ -1,7 +1,7 @@
-import Home from "src-1/pages/Home";
-import Search from "src-1/pages/Search";
-import Register from "src-1/pages/Register";
-import Login from "src-1/pages/Login";
+import Home from "@/pages/Home";
+import Search from "@/pages/Search";
+import Register from "@/pages/Register";
+import Login from "@/pages/Login";
 
 export default [
   {

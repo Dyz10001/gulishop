@@ -1,4 +1,4 @@
-import { reqCategoryList } from "src-1/api";
+import { reqCategoryList } from "@/api";
 const state = {
   categoryList: [],
 };
