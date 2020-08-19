@@ -2,6 +2,8 @@ import Home from "@/pages/Home";
 import Login from "@/pages/Login";
 import Register from "@/pages/Register";
 import Search from "@/pages/Search";
+import Detail from "@/pages/Detail";
+
 const routes = [
   {
     path: "/home",
@@ -32,6 +34,11 @@ const routes = [
         keyword1: route.query.keyword,
       };
     },
+  },
+  {
+    path: "/detail/:skuId?",
+    name: "Detail",
+    component: Detail,
   },
   {
     path: "/",

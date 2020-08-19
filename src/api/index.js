@@ -30,3 +30,11 @@ export const reqGoodsListInfo = (searchParams) => {
     data: searchParams,
   });
 };
+
+//Detail
+export const reqDetailInfo = (skuId) => {
+  return Ajax({
+    method: "GET",
+    url: `/item/${skuId}`,
+  });
+};

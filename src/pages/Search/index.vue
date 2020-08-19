@@ -110,9 +110,12 @@
               >
                 <div class="list-wrap">
                   <div class="p-img">
-                    <a href="item.html" target="_blank"
+                    <router-link :to="`/detail/${goods.id}`">
+                      <img :src="goods.defaultImg" />
+                    </router-link>
+                    <!-- <a href="item.html" target="_blank"
                       ><img :src="goods.defaultImg"
-                    /></a>
+                    /></a> -->
                   </div>
                   <div class="price">
                     <strong>
@@ -121,12 +124,15 @@
                     </strong>
                   </div>
                   <div class="attr">
-                    <a
+                    <router-link :to="`/detail/${goods.id}`">
+                      {{ goods.title }}
+                    </router-link>
+                    <!-- <a
                       target="_blank"
                       href="item.html"
                       title="促销信息，下单即赠送三个月CIBN视频会员卡！【小米电视新品4A 58 火爆预约中】"
                       >{{ goods.title }}</a
-                    >
+                    > -->
                   </div>
                   <div class="commit">
                     <i class="command">已有<span>2000</span>人评价</i>
@@ -146,35 +152,13 @@
               </li>
             </ul>
           </div>
-          <div class="fr page">
-            <div class="sui-pagination clearfix">
-              <ul>
-                <li class="prev disabled">
-                  <a href="#">«上一页</a>
-                </li>
-                <li class="active">
-                  <a href="#">1</a>
-                </li>
-                <li>
-                  <a href="#">2</a>
-                </li>
-                <li>
-                  <a href="#">3</a>
-                </li>
-                <li>
-                  <a href="#">4</a>
-                </li>
-                <li>
-                  <a href="#">5</a>
-                </li>
-                <li class="dotted"><span>...</span></li>
-                <li class="next">
-                  <a href="#">下一页»</a>
-                </li>
-              </ul>
-              <div><span>共10页&nbsp;</span></div>
-            </div>
-          </div>
+          <Pagination
+            :currentPageNum="goodsListInfo.pageNo"
+            :pageSize="goodsListInfo.pageSize"
+            :total="goodsListInfo.total"
+            :continueSize="5"
+            @changePageNum="changePageNum"
+          />
         </div>
       </div>
     </div>
@@ -183,9 +167,10 @@
 
 <script>
 import SearchSelector from "./SearchSelector/SearchSelector";
-import { mapGetters } from "vuex";
+import { mapGetters, mapState } from "vuex";
 export default {
   name: "Search",
+
   data() {
     return {
       searchParams: {
@@ -196,18 +181,21 @@ export default {
         keyword: "",
         order: "1:desc",
         pageNo: 1,
-        pageSize: 10,
+        pageSize: 2,
         props: [],
         trademark: "",
       },
     };
   },
+
   beforeMount() {
     this.handlerSearchParams();
   },
+
   mounted() {
     this.getGoodsListInfo();
   },
+
   methods: {
     getGoodsListInfo() {
       this.$store.dispatch("getGoodsListInfo", this.searchParams);
@@ -236,29 +224,35 @@ export default {
       this.searchParams = searchParams;
     },
     removeKeyword() {
+      this.searchParams.pageNo = 1;
       this.searchParams.keyword = "";
       this.$router.replace({ name: "Search", query: this.$route.query });
     },
     removecategoryName() {
+      this.searchParams.pageNo = 1;
       this.searchParams.categoryName = "";
 
       this.$router.replace({ name: "Search", params: this.$route.params });
     },
     searchForTrademark(trademark) {
+      this.searchParams.pageNo = 1;
       this.searchParams.trademark = trademark;
       this.getGoodsListInfo();
     },
     removeTrademark() {
+      this.searchParams.pageNo = 1;
       this.searchParams.trademark = "";
       this.getGoodsListInfo();
     },
     searchForAttrValue(attrValue) {
       const num = this.searchParams.props.indexOf(attrValue);
       if (num !== -1) return;
+      this.searchParams.pageNo = 1;
       this.searchParams.props.push(attrValue);
       this.getGoodsListInfo();
     },
     removeAttrValue(index) {
+      this.searchParams.pageNo = 1;
       this.searchParams.props.splice(index, 1);
       this.getGoodsListInfo();
     },
@@ -275,15 +269,26 @@ export default {
         newOrder = `${orderFlag}:desc`;
       }
       this.searchParams.order = newOrder;
+      this.searchParams.pageNo = 1;
+      this.getGoodsListInfo();
+    },
+    changePageNum(pageNum) {
+      this.searchParams.pageNo = pageNum;
       this.getGoodsListInfo();
     },
   },
+
   components: {
     SearchSelector,
   },
+
   computed: {
+    ...mapState({
+      goodsListInfo: (state) => state.search.goodsListInfo,
+    }),
     ...mapGetters(["goodsList"]),
   },
+
   watch: {
     $route() {
       this.handlerSearchParams();
